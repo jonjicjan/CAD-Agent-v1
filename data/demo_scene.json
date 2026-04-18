@@ -1,0 +1,2953 @@
+{
+  "meta": {
+    "source_file": "18000_SWC_routing_model.json",
+    "project": "Indian Navy Multi-Purpose Vessel 18000",
+    "system": "Machinery Seawater Cooling System",
+    "deck": "Deck 4 (1200 ABL)",
+    "coordinate_units": "metres (converted from mm)",
+    "total_clashes": 43,
+    "total_rule_violations": 0,
+    "cos_object_count": 32,
+    "system_count": 25,
+    "engineering_rules": [
+      "SW pipes routed at z=4800mm (highway level) to stay above engine/gearbox maintenance envelope (z<2500mm)",
+      "Minimum 300mm separation maintained from HFO/DO fuel lines throughout",
+      "No SW pipe routed directly above main switchboard or soft-starter panels (DG electrical zones at x>10000)",
+      "DG branches use flexible hose connections to absorb engine vibration \u2014 prevents pipe fatigue",
+      "Emergency cross-connect (RT_XCONNECT_FER_AER) added to schematic which had no cross-connection \u2014 critical for damage control",
+      "Return lines routed starboard at z=4600mm (100mm below supply highway) to maintain visual separation",
+      "Non-return valves on all pump discharges to prevent reverse rotation on standby units",
+      "RO plant feed branched from suction side (pre-pump) with self-cleaning strainer \u2014 prevents membrane fouling",
+      "All bulkhead penetrations require A60 fire-rated glands per SOLAS II-2",
+      "CuNi 90/10 selected for all wetted SW surfaces; GRP permitted on suction > DN350 for weight saving"
+    ]
+  },
+  "cos_objects": [
+    {
+      "oid": "Z_FER",
+      "name": "Forward Engine Room",
+      "type": "zone",
+      "bounds": {
+        "min_x": 0.0,
+        "min_y": 0.0,
+        "min_z": 0.0,
+        "max_x": 14.0,
+        "max_y": 22.0,
+        "max_z": 6.5
+      },
+      "has_clash": false
+    },
+    {
+      "oid": "Z_AER",
+      "name": "Aft Engine Room",
+      "type": "zone",
+      "bounds": {
+        "min_x": 0.0,
+        "min_y": -15.0,
+        "min_z": 0.0,
+        "max_x": 14.0,
+        "max_y": 0.0,
+        "max_z": 6.5
+      },
+      "has_clash": false
+    },
+    {
+      "oid": "Z_AVCAT",
+      "name": "AVCAT Pump Room",
+      "type": "zone",
+      "bounds": {
+        "min_x": 0.0,
+        "min_y": -15.0,
+        "min_z": 0.0,
+        "max_x": 5.0,
+        "max_y": -10.0,
+        "max_z": 4.0
+      },
+      "has_clash": false
+    },
+    {
+      "oid": "Z_AUX",
+      "name": "Auxiliary Compartment",
+      "type": "zone",
+      "bounds": {
+        "min_x": 9.0,
+        "min_y": -5.0,
+        "min_z": 0.0,
+        "max_x": 14.0,
+        "max_y": 5.0,
+        "max_z": 4.0
+      },
+      "has_clash": false
+    },
+    {
+      "oid": "Z_RO",
+      "name": "RO Plant Bay",
+      "type": "zone",
+      "bounds": {
+        "min_x": 4.0,
+        "min_y": -5.0,
+        "min_z": 0.0,
+        "max_x": 9.0,
+        "max_y": 0.0,
+        "max_z": 3.5
+      },
+      "has_clash": false
+    },
+    {
+      "oid": "Z_AC",
+      "name": "AC Plant Bay",
+      "type": "zone",
+      "bounds": {
+        "min_x": 4.0,
+        "min_y": 0.0,
+        "min_z": 0.0,
+        "max_x": 9.0,
+        "max_y": 5.0,
+        "max_z": 3.5
+      },
+      "has_clash": false
+    },
+    {
+      "oid": "SWC_P1",
+      "name": "ME Coolant SWC Pump (Fwd) [pump]",
+      "type": "pump",
+      "bounds": {
+        "min_x": 2.1999999999999997,
+        "min_y": 4.0,
+        "min_z": 0.7,
+        "max_x": 3.4,
+        "max_y": 5.0,
+        "max_z": 1.7
+      },
+      "has_clash": true
+    },
+    {
+      "oid": "SWC_P1B",
+      "name": "ME Coolant SWC Pump (Fwd) \u2014 Standby [pump]",
+      "type": "pump",
+      "bounds": {
+        "min_x": 2.8,
+        "min_y": 4.0,
+        "min_z": 0.7,
+        "max_x": 4.0,
+        "max_y": 5.0,
+        "max_z": 1.7
+      },
+      "has_clash": true
+    },
+    {
+      "oid": "SWC_P2",
+      "name": "ME Coolant SWC Pump (Aft) [pump]",
+      "type": "pump",
+      "bounds": {
+        "min_x": 2.1999999999999997,
+        "min_y": -5.0,
+        "min_z": 0.7,
+        "max_x": 3.4,
+        "max_y": -4.0,
+        "max_z": 1.7
+      },
+      "has_clash": true
+    },
+    {
+      "oid": "SWC_P2B",
+      "name": "ME Coolant SWC Pump (Aft) \u2014 Standby [pump]",
+      "type": "pump",
+      "bounds": {
+        "min_x": 2.8,
+        "min_y": -5.0,
+        "min_z": 0.7,
+        "max_x": 4.0,
+        "max_y": -4.0,
+        "max_z": 1.7
+      },
+      "has_clash": true
+    },
+    {
+      "oid": "SWC_P3",
+      "name": "ME LO SWC Pump (Fwd) [pump]",
+      "type": "pump",
+      "bounds": {
+        "min_x": 4.4,
+        "min_y": 4.0,
+        "min_z": 0.7,
+        "max_x": 5.6,
+        "max_y": 5.0,
+        "max_z": 1.7
+      },
+      "has_clash": true
+    },
+    {
+      "oid": "SWC_P4",
+      "name": "ME LO SWC Pump (Aft) [pump]",
+      "type": "pump",
+      "bounds": {
+        "min_x": 4.4,
+        "min_y": -5.0,
+        "min_z": 0.7,
+        "max_x": 5.6,
+        "max_y": -4.0,
+        "max_z": 1.7
+      },
+      "has_clash": true
+    },
+    {
+      "oid": "ME_COOLANT_HE_FER",
+      "name": "Main Engine Coolant Heat Exchanger (Fwd) [heat_exchanger]",
+      "type": "heat_exchanger",
+      "bounds": {
+        "min_x": 2.8,
+        "min_y": 5.2,
+        "min_z": 0.6000000000000001,
+        "max_x": 5.2,
+        "max_y": 6.8,
+        "max_z": 2.6
+      },
+      "has_clash": true
+    },
+    {
+      "oid": "ME_OIL_HE_FER",
+      "name": "Main Engine LO Heat Exchanger (Fwd) [heat_exchanger]",
+      "type": "heat_exchanger",
+      "bounds": {
+        "min_x": 4.6,
+        "min_y": 5.2,
+        "min_z": 0.6000000000000001,
+        "max_x": 7.0,
+        "max_y": 6.8,
+        "max_z": 2.6
+      },
+      "has_clash": true
+    },
+    {
+      "oid": "ME_COOLANT_HE_AER",
+      "name": "Main Engine Coolant Heat Exchanger (Aft) [heat_exchanger]",
+      "type": "heat_exchanger",
+      "bounds": {
+        "min_x": 2.8,
+        "min_y": -6.8,
+        "min_z": 0.6000000000000001,
+        "max_x": 5.2,
+        "max_y": -5.2,
+        "max_z": 2.6
+      },
+      "has_clash": true
+    },
+    {
+      "oid": "ME_OIL_HE_AER",
+      "name": "Main Engine LO Heat Exchanger (Aft) [heat_exchanger]",
+      "type": "heat_exchanger",
+      "bounds": {
+        "min_x": 4.6,
+        "min_y": -6.8,
+        "min_z": 0.6000000000000001,
+        "max_x": 7.0,
+        "max_y": -5.2,
+        "max_z": 2.6
+      },
+      "has_clash": true
+    },
+    {
+      "oid": "DG1",
+      "name": "Diesel Generator 1 [generator]",
+      "type": "generator",
+      "bounds": {
+        "min_x": 8.0,
+        "min_y": 15.5,
+        "min_z": 0.30000000000000004,
+        "max_x": 9.0,
+        "max_y": 16.5,
+        "max_z": 1.3
+      },
+      "has_clash": true
+    },
+    {
+      "oid": "DG2",
+      "name": "Diesel Generator 2 [generator]",
+      "type": "generator",
+      "bounds": {
+        "min_x": 10.0,
+        "min_y": 15.5,
+        "min_z": 0.30000000000000004,
+        "max_x": 11.0,
+        "max_y": 16.5,
+        "max_z": 1.3
+      },
+      "has_clash": true
+    },
+    {
+      "oid": "DG3",
+      "name": "Diesel Generator 3 [generator]",
+      "type": "generator",
+      "bounds": {
+        "min_x": 12.0,
+        "min_y": 15.5,
+        "min_z": 0.30000000000000004,
+        "max_x": 13.0,
+        "max_y": 16.5,
+        "max_z": 1.3
+      },
+      "has_clash": true
+    },
+    {
+      "oid": "DG4",
+      "name": "Diesel Generator 4 [generator]",
+      "type": "generator",
+      "bounds": {
+        "min_x": 8.0,
+        "min_y": -10.5,
+        "min_z": 0.30000000000000004,
+        "max_x": 9.0,
+        "max_y": -9.5,
+        "max_z": 1.3
+      },
+      "has_clash": true
+    },
+    {
+      "oid": "DG5",
+      "name": "Diesel Generator 5 [generator]",
+      "type": "generator",
+      "bounds": {
+        "min_x": 10.0,
+        "min_y": -10.5,
+        "min_z": 0.30000000000000004,
+        "max_x": 11.0,
+        "max_y": -9.5,
+        "max_z": 1.3
+      },
+      "has_clash": true
+    },
+    {
+      "oid": "DG6",
+      "name": "Diesel Generator 6 [generator]",
+      "type": "generator",
+      "bounds": {
+        "min_x": 12.0,
+        "min_y": -10.5,
+        "min_z": 0.30000000000000004,
+        "max_x": 13.0,
+        "max_y": -9.5,
+        "max_z": 1.3
+      },
+      "has_clash": true
+    },
+    {
+      "oid": "AC_PLANT_12",
+      "name": "AC Plant 1 & 2 [hvac_chiller]",
+      "type": "hvac_chiller",
+      "bounds": {
+        "min_x": 6.5,
+        "min_y": 2.0,
+        "min_z": 0.5,
+        "max_x": 7.5,
+        "max_y": 3.0,
+        "max_z": 1.5
+      },
+      "has_clash": true
+    },
+    {
+      "oid": "AC_PLANT_34",
+      "name": "AC Plant 3 & 4 [hvac_chiller]",
+      "type": "hvac_chiller",
+      "bounds": {
+        "min_x": 6.5,
+        "min_y": -3.0,
+        "min_z": 0.5,
+        "max_x": 7.5,
+        "max_y": -2.0,
+        "max_z": 1.5
+      },
+      "has_clash": true
+    },
+    {
+      "oid": "RO_PLANT_1",
+      "name": "RO Plant 1 [ro_plant]",
+      "type": "ro_plant",
+      "bounds": {
+        "min_x": 4.5,
+        "min_y": -2.0,
+        "min_z": 0.4,
+        "max_x": 5.5,
+        "max_y": -1.0,
+        "max_z": 1.4
+      },
+      "has_clash": true
+    },
+    {
+      "oid": "RO_PLANT_2",
+      "name": "RO Plant 2 [ro_plant]",
+      "type": "ro_plant",
+      "bounds": {
+        "min_x": 6.0,
+        "min_y": -2.0,
+        "min_z": 0.4,
+        "max_x": 7.0,
+        "max_y": -1.0,
+        "max_z": 1.4
+      },
+      "has_clash": true
+    },
+    {
+      "oid": "CHILLED_WP",
+      "name": "Chilled Water Pump [pump]",
+      "type": "pump",
+      "bounds": {
+        "min_x": 10.4,
+        "min_y": 4.5,
+        "min_z": 0.5,
+        "max_x": 11.6,
+        "max_y": 5.5,
+        "max_z": 1.5
+      },
+      "has_clash": false
+    },
+    {
+      "oid": "SW_INLET_BOX_FER",
+      "name": "Seawater Inlet Sea Chest (Fwd ER) [sea_chest]",
+      "type": "sea_chest",
+      "bounds": {
+        "min_x": 0.19999999999999996,
+        "min_y": 7.2,
+        "min_z": -0.8,
+        "max_x": 1.8,
+        "max_y": 8.8,
+        "max_z": -0.2
+      },
+      "has_clash": false
+    },
+    {
+      "oid": "SW_INLET_BOX_AER",
+      "name": "Seawater Inlet Sea Chest (Aft ER) [sea_chest]",
+      "type": "sea_chest",
+      "bounds": {
+        "min_x": 0.19999999999999996,
+        "min_y": -8.8,
+        "min_z": -0.8,
+        "max_x": 1.8,
+        "max_y": -7.2,
+        "max_z": -0.2
+      },
+      "has_clash": false
+    },
+    {
+      "oid": "SW_OUTLET_BOX_FER",
+      "name": "Seawater Overboard Outlet (Fwd ER) [overboard_valve]",
+      "type": "overboard_valve",
+      "bounds": {
+        "min_x": 12.7,
+        "min_y": 7.7,
+        "min_z": 0.4,
+        "max_x": 13.3,
+        "max_y": 8.3,
+        "max_z": 1.2000000000000002
+      },
+      "has_clash": true
+    },
+    {
+      "oid": "SW_OUTLET_BOX_AER",
+      "name": "Seawater Overboard Outlet (Aft ER) [overboard_valve]",
+      "type": "overboard_valve",
+      "bounds": {
+        "min_x": 12.7,
+        "min_y": -8.3,
+        "min_z": 0.4,
+        "max_x": 13.3,
+        "max_y": -7.7,
+        "max_z": 1.2000000000000002
+      },
+      "has_clash": true
+    },
+    {
+      "oid": "FW_COOL_TK",
+      "name": "Fresh Water Cooling Tank [tank]",
+      "type": "tank",
+      "bounds": {
+        "min_x": 7.5,
+        "min_y": 4.0,
+        "min_z": -0.5,
+        "max_x": 10.5,
+        "max_y": 6.0,
+        "max_z": 1.5
+      },
+      "has_clash": false
+    }
+  ],
+  "routes": [
+    {
+      "system_id": "RT_SW_SUCTION_FER",
+      "system_type": "Pipe",
+      "raw_type": "seawater_cooling_suction",
+      "description": "Seawater from sea chest to pump suctions \u2014 FER",
+      "profile_type": "circular",
+      "size": {
+        "diameter_mm": 400
+      },
+      "waypoints": [
+        {
+          "x": 1.0,
+          "y": 8.0,
+          "z": 0.2
+        },
+        {
+          "x": 1.0,
+          "y": 8.0,
+          "z": 4.8
+        },
+        {
+          "x": 0.8,
+          "y": 8.0,
+          "z": 4.8
+        },
+        {
+          "x": 0.8,
+          "y": 4.5,
+          "z": 4.8
+        },
+        {
+          "x": 0.8,
+          "y": 4.5,
+          "z": 1.2
+        },
+        {
+          "x": 2.6,
+          "y": 4.5,
+          "z": 0.9
+        }
+      ],
+      "segments": [
+        {
+          "seg_index": 0,
+          "bounds": {
+            "min_x": 0.8,
+            "min_y": 7.8,
+            "min_z": 0.0,
+            "max_x": 1.2,
+            "max_y": 8.2,
+            "max_z": 5.0
+          },
+          "length_m": 4.6
+        },
+        {
+          "seg_index": 1,
+          "bounds": {
+            "min_x": 0.6000000000000001,
+            "min_y": 7.8,
+            "min_z": 4.6,
+            "max_x": 1.2,
+            "max_y": 8.2,
+            "max_z": 5.0
+          },
+          "length_m": 0.2
+        },
+        {
+          "seg_index": 2,
+          "bounds": {
+            "min_x": 0.6000000000000001,
+            "min_y": 4.3,
+            "min_z": 4.6,
+            "max_x": 1.0,
+            "max_y": 8.2,
+            "max_z": 5.0
+          },
+          "length_m": 3.5
+        },
+        {
+          "seg_index": 3,
+          "bounds": {
+            "min_x": 0.6000000000000001,
+            "min_y": 4.3,
+            "min_z": 1.0,
+            "max_x": 1.0,
+            "max_y": 4.7,
+            "max_z": 5.0
+          },
+          "length_m": 3.6
+        },
+        {
+          "seg_index": 4,
+          "bounds": {
+            "min_x": 0.6000000000000001,
+            "min_y": 4.3,
+            "min_z": 0.7,
+            "max_x": 2.8000000000000003,
+            "max_y": 4.7,
+            "max_z": 1.4
+          },
+          "length_m": 1.825
+        }
+      ]
+    },
+    {
+      "system_id": "RT_SW_SUCTION_FER_P1B",
+      "system_type": "Pipe",
+      "raw_type": "seawater_cooling_suction_branch",
+      "description": "Branch \u2192 SWC_P1B",
+      "profile_type": "circular",
+      "size": {
+        "diameter_mm": 300
+      },
+      "waypoints": [
+        {
+          "x": 0.8,
+          "y": 4.5,
+          "z": 4.8
+        },
+        {
+          "x": 0.8,
+          "y": 4.5,
+          "z": 1.2
+        },
+        {
+          "x": 3.2,
+          "y": 4.5,
+          "z": 0.9
+        }
+      ],
+      "segments": [
+        {
+          "seg_index": 0,
+          "bounds": {
+            "min_x": 0.65,
+            "min_y": 4.35,
+            "min_z": 1.05,
+            "max_x": 0.9500000000000001,
+            "max_y": 4.65,
+            "max_z": 4.95
+          },
+          "length_m": 3.6
+        },
+        {
+          "seg_index": 1,
+          "bounds": {
+            "min_x": 0.65,
+            "min_y": 4.35,
+            "min_z": 0.75,
+            "max_x": 3.35,
+            "max_y": 4.65,
+            "max_z": 1.3499999999999999
+          },
+          "length_m": 2.419
+        }
+      ]
+    },
+    {
+      "system_id": "RT_SW_SUCTION_FER_P3",
+      "system_type": "Pipe",
+      "raw_type": "seawater_cooling_suction_branch",
+      "description": "Branch \u2192 SWC_P3",
+      "profile_type": "circular",
+      "size": {
+        "diameter_mm": 250
+      },
+      "waypoints": [
+        {
+          "x": 0.8,
+          "y": 4.5,
+          "z": 4.8
+        },
+        {
+          "x": 0.8,
+          "y": 4.5,
+          "z": 1.2
+        },
+        {
+          "x": 4.8,
+          "y": 4.5,
+          "z": 0.9
+        }
+      ],
+      "segments": [
+        {
+          "seg_index": 0,
+          "bounds": {
+            "min_x": 0.675,
+            "min_y": 4.375,
+            "min_z": 1.075,
+            "max_x": 0.925,
+            "max_y": 4.625,
+            "max_z": 4.925
+          },
+          "length_m": 3.6
+        },
+        {
+          "seg_index": 1,
+          "bounds": {
+            "min_x": 0.675,
+            "min_y": 4.375,
+            "min_z": 0.775,
+            "max_x": 4.925,
+            "max_y": 4.625,
+            "max_z": 1.325
+          },
+          "length_m": 4.011
+        }
+      ]
+    },
+    {
+      "system_id": "RT_SW_SUCTION_AER",
+      "system_type": "Pipe",
+      "raw_type": "seawater_cooling_suction",
+      "description": "Seawater from sea chest to pump suctions \u2014 AER",
+      "profile_type": "circular",
+      "size": {
+        "diameter_mm": 400
+      },
+      "waypoints": [
+        {
+          "x": 1.0,
+          "y": -8.0,
+          "z": 0.2
+        },
+        {
+          "x": 1.0,
+          "y": -8.0,
+          "z": 4.8
+        },
+        {
+          "x": 0.8,
+          "y": -8.0,
+          "z": 4.8
+        },
+        {
+          "x": 0.8,
+          "y": -4.5,
+          "z": 4.8
+        },
+        {
+          "x": 0.8,
+          "y": -4.5,
+          "z": 1.2
+        },
+        {
+          "x": 2.6,
+          "y": -4.5,
+          "z": 0.9
+        }
+      ],
+      "segments": [
+        {
+          "seg_index": 0,
+          "bounds": {
+            "min_x": 0.8,
+            "min_y": -8.2,
+            "min_z": 0.0,
+            "max_x": 1.2,
+            "max_y": -7.8,
+            "max_z": 5.0
+          },
+          "length_m": 4.6
+        },
+        {
+          "seg_index": 1,
+          "bounds": {
+            "min_x": 0.6000000000000001,
+            "min_y": -8.2,
+            "min_z": 4.6,
+            "max_x": 1.2,
+            "max_y": -7.8,
+            "max_z": 5.0
+          },
+          "length_m": 0.2
+        },
+        {
+          "seg_index": 2,
+          "bounds": {
+            "min_x": 0.6000000000000001,
+            "min_y": -8.2,
+            "min_z": 4.6,
+            "max_x": 1.0,
+            "max_y": -4.3,
+            "max_z": 5.0
+          },
+          "length_m": 3.5
+        },
+        {
+          "seg_index": 3,
+          "bounds": {
+            "min_x": 0.6000000000000001,
+            "min_y": -4.7,
+            "min_z": 1.0,
+            "max_x": 1.0,
+            "max_y": -4.3,
+            "max_z": 5.0
+          },
+          "length_m": 3.6
+        },
+        {
+          "seg_index": 4,
+          "bounds": {
+            "min_x": 0.6000000000000001,
+            "min_y": -4.7,
+            "min_z": 0.7,
+            "max_x": 2.8000000000000003,
+            "max_y": -4.3,
+            "max_z": 1.4
+          },
+          "length_m": 1.825
+        }
+      ]
+    },
+    {
+      "system_id": "RT_SW_SUCTION_AER_P2B",
+      "system_type": "Pipe",
+      "raw_type": "seawater_cooling_suction_branch",
+      "description": "Branch \u2192 SWC_P2B",
+      "profile_type": "circular",
+      "size": {
+        "diameter_mm": 300
+      },
+      "waypoints": [
+        {
+          "x": 0.8,
+          "y": -4.5,
+          "z": 4.8
+        },
+        {
+          "x": 0.8,
+          "y": -4.5,
+          "z": 1.2
+        },
+        {
+          "x": 3.2,
+          "y": -4.5,
+          "z": 0.9
+        }
+      ],
+      "segments": [
+        {
+          "seg_index": 0,
+          "bounds": {
+            "min_x": 0.65,
+            "min_y": -4.65,
+            "min_z": 1.05,
+            "max_x": 0.9500000000000001,
+            "max_y": -4.35,
+            "max_z": 4.95
+          },
+          "length_m": 3.6
+        },
+        {
+          "seg_index": 1,
+          "bounds": {
+            "min_x": 0.65,
+            "min_y": -4.65,
+            "min_z": 0.75,
+            "max_x": 3.35,
+            "max_y": -4.35,
+            "max_z": 1.3499999999999999
+          },
+          "length_m": 2.419
+        }
+      ]
+    },
+    {
+      "system_id": "RT_SW_SUCTION_AER_P4",
+      "system_type": "Pipe",
+      "raw_type": "seawater_cooling_suction_branch",
+      "description": "Branch \u2192 SWC_P4",
+      "profile_type": "circular",
+      "size": {
+        "diameter_mm": 250
+      },
+      "waypoints": [
+        {
+          "x": 0.8,
+          "y": -4.5,
+          "z": 4.8
+        },
+        {
+          "x": 0.8,
+          "y": -4.5,
+          "z": 1.2
+        },
+        {
+          "x": 4.8,
+          "y": -4.5,
+          "z": 0.9
+        }
+      ],
+      "segments": [
+        {
+          "seg_index": 0,
+          "bounds": {
+            "min_x": 0.675,
+            "min_y": -4.625,
+            "min_z": 1.075,
+            "max_x": 0.925,
+            "max_y": -4.375,
+            "max_z": 4.925
+          },
+          "length_m": 3.6
+        },
+        {
+          "seg_index": 1,
+          "bounds": {
+            "min_x": 0.675,
+            "min_y": -4.625,
+            "min_z": 0.775,
+            "max_x": 4.925,
+            "max_y": -4.375,
+            "max_z": 1.325
+          },
+          "length_m": 4.011
+        }
+      ]
+    },
+    {
+      "system_id": "RT_P1_TO_ME_COOL_HE_FER",
+      "system_type": "Duct",
+      "raw_type": "seawater_cooling_discharge",
+      "description": "SWC pump discharge to ME Coolant HE \u2014 FER",
+      "profile_type": "circular",
+      "size": {
+        "diameter_mm": 300
+      },
+      "waypoints": [
+        {
+          "x": 3.0,
+          "y": 4.5,
+          "z": 1.5
+        },
+        {
+          "x": 3.0,
+          "y": 4.5,
+          "z": 2.8
+        },
+        {
+          "x": 3.8,
+          "y": 4.5,
+          "z": 2.8
+        },
+        {
+          "x": 3.8,
+          "y": 6.0,
+          "z": 2.8
+        },
+        {
+          "x": 3.8,
+          "y": 6.0,
+          "z": 1.8
+        },
+        {
+          "x": 3.8,
+          "y": 6.0,
+          "z": 1.8
+        }
+      ],
+      "segments": [
+        {
+          "seg_index": 0,
+          "bounds": {
+            "min_x": 2.85,
+            "min_y": 4.35,
+            "min_z": 1.35,
+            "max_x": 3.15,
+            "max_y": 4.65,
+            "max_z": 2.9499999999999997
+          },
+          "length_m": 1.3
+        },
+        {
+          "seg_index": 1,
+          "bounds": {
+            "min_x": 2.85,
+            "min_y": 4.35,
+            "min_z": 2.65,
+            "max_x": 3.9499999999999997,
+            "max_y": 4.65,
+            "max_z": 2.9499999999999997
+          },
+          "length_m": 0.8
+        },
+        {
+          "seg_index": 2,
+          "bounds": {
+            "min_x": 3.65,
+            "min_y": 4.35,
+            "min_z": 2.65,
+            "max_x": 3.9499999999999997,
+            "max_y": 6.15,
+            "max_z": 2.9499999999999997
+          },
+          "length_m": 1.5
+        },
+        {
+          "seg_index": 3,
+          "bounds": {
+            "min_x": 3.65,
+            "min_y": 5.85,
+            "min_z": 1.6500000000000001,
+            "max_x": 3.9499999999999997,
+            "max_y": 6.15,
+            "max_z": 2.9499999999999997
+          },
+          "length_m": 1.0
+        },
+        {
+          "seg_index": 4,
+          "bounds": {
+            "min_x": 3.65,
+            "min_y": 5.85,
+            "min_z": 1.6500000000000001,
+            "max_x": 3.9499999999999997,
+            "max_y": 6.15,
+            "max_z": 1.95
+          },
+          "length_m": 0.0
+        }
+      ]
+    },
+    {
+      "system_id": "RT_P3_TO_ME_OIL_HE_FER",
+      "system_type": "Duct",
+      "raw_type": "seawater_cooling_discharge",
+      "description": "SWC pump discharge to ME LO HE \u2014 FER",
+      "profile_type": "circular",
+      "size": {
+        "diameter_mm": 250
+      },
+      "waypoints": [
+        {
+          "x": 5.2,
+          "y": 4.5,
+          "z": 1.5
+        },
+        {
+          "x": 5.2,
+          "y": 4.5,
+          "z": 2.8
+        },
+        {
+          "x": 5.6,
+          "y": 4.5,
+          "z": 2.8
+        },
+        {
+          "x": 5.6,
+          "y": 6.0,
+          "z": 2.8
+        },
+        {
+          "x": 5.6,
+          "y": 6.0,
+          "z": 1.8
+        }
+      ],
+      "segments": [
+        {
+          "seg_index": 0,
+          "bounds": {
+            "min_x": 5.075,
+            "min_y": 4.375,
+            "min_z": 1.375,
+            "max_x": 5.325,
+            "max_y": 4.625,
+            "max_z": 2.925
+          },
+          "length_m": 1.3
+        },
+        {
+          "seg_index": 1,
+          "bounds": {
+            "min_x": 5.075,
+            "min_y": 4.375,
+            "min_z": 2.675,
+            "max_x": 5.725,
+            "max_y": 4.625,
+            "max_z": 2.925
+          },
+          "length_m": 0.4
+        },
+        {
+          "seg_index": 2,
+          "bounds": {
+            "min_x": 5.475,
+            "min_y": 4.375,
+            "min_z": 2.675,
+            "max_x": 5.725,
+            "max_y": 6.125,
+            "max_z": 2.925
+          },
+          "length_m": 1.5
+        },
+        {
+          "seg_index": 3,
+          "bounds": {
+            "min_x": 5.475,
+            "min_y": 5.875,
+            "min_z": 1.675,
+            "max_x": 5.725,
+            "max_y": 6.125,
+            "max_z": 2.925
+          },
+          "length_m": 1.0
+        }
+      ]
+    },
+    {
+      "system_id": "RT_ME_COOL_HE_FER_TO_OVERBOARD",
+      "system_type": "Duct",
+      "raw_type": "seawater_cooling_return",
+      "description": "ME Coolant HE SW outlet to overboard \u2014 FER",
+      "profile_type": "circular",
+      "size": {
+        "diameter_mm": 350
+      },
+      "waypoints": [
+        {
+          "x": 4.2,
+          "y": 6.0,
+          "z": 1.4
+        },
+        {
+          "x": 4.2,
+          "y": 6.0,
+          "z": 4.6
+        },
+        {
+          "x": 13.0,
+          "y": 6.0,
+          "z": 4.6
+        },
+        {
+          "x": 13.0,
+          "y": 8.0,
+          "z": 4.6
+        },
+        {
+          "x": 13.0,
+          "y": 8.0,
+          "z": 0.8
+        },
+        {
+          "x": 13.0,
+          "y": 8.0,
+          "z": 0.8
+        }
+      ],
+      "segments": [
+        {
+          "seg_index": 0,
+          "bounds": {
+            "min_x": 4.025,
+            "min_y": 5.825,
+            "min_z": 1.2249999999999999,
+            "max_x": 4.375,
+            "max_y": 6.175,
+            "max_z": 4.7749999999999995
+          },
+          "length_m": 3.2
+        },
+        {
+          "seg_index": 1,
+          "bounds": {
+            "min_x": 4.025,
+            "min_y": 5.825,
+            "min_z": 4.425,
+            "max_x": 13.175,
+            "max_y": 6.175,
+            "max_z": 4.7749999999999995
+          },
+          "length_m": 8.8
+        },
+        {
+          "seg_index": 2,
+          "bounds": {
+            "min_x": 12.825,
+            "min_y": 5.825,
+            "min_z": 4.425,
+            "max_x": 13.175,
+            "max_y": 8.175,
+            "max_z": 4.7749999999999995
+          },
+          "length_m": 2.0
+        },
+        {
+          "seg_index": 3,
+          "bounds": {
+            "min_x": 12.825,
+            "min_y": 7.825,
+            "min_z": 0.625,
+            "max_x": 13.175,
+            "max_y": 8.175,
+            "max_z": 4.7749999999999995
+          },
+          "length_m": 3.8
+        },
+        {
+          "seg_index": 4,
+          "bounds": {
+            "min_x": 12.825,
+            "min_y": 7.825,
+            "min_z": 0.625,
+            "max_x": 13.175,
+            "max_y": 8.175,
+            "max_z": 0.9750000000000001
+          },
+          "length_m": 0.0
+        }
+      ]
+    },
+    {
+      "system_id": "RT_P2_TO_ME_COOL_HE_AER",
+      "system_type": "Duct",
+      "raw_type": "seawater_cooling_discharge",
+      "description": "SWC pump discharge to ME Coolant HE \u2014 AER (mirror of FER)",
+      "profile_type": "circular",
+      "size": {
+        "diameter_mm": 300
+      },
+      "waypoints": [
+        {
+          "x": 3.0,
+          "y": -4.5,
+          "z": 1.5
+        },
+        {
+          "x": 3.0,
+          "y": -4.5,
+          "z": 2.8
+        },
+        {
+          "x": 3.8,
+          "y": -4.5,
+          "z": 2.8
+        },
+        {
+          "x": 3.8,
+          "y": -6.0,
+          "z": 2.8
+        },
+        {
+          "x": 3.8,
+          "y": -6.0,
+          "z": 1.8
+        }
+      ],
+      "segments": [
+        {
+          "seg_index": 0,
+          "bounds": {
+            "min_x": 2.85,
+            "min_y": -4.65,
+            "min_z": 1.35,
+            "max_x": 3.15,
+            "max_y": -4.35,
+            "max_z": 2.9499999999999997
+          },
+          "length_m": 1.3
+        },
+        {
+          "seg_index": 1,
+          "bounds": {
+            "min_x": 2.85,
+            "min_y": -4.65,
+            "min_z": 2.65,
+            "max_x": 3.9499999999999997,
+            "max_y": -4.35,
+            "max_z": 2.9499999999999997
+          },
+          "length_m": 0.8
+        },
+        {
+          "seg_index": 2,
+          "bounds": {
+            "min_x": 3.65,
+            "min_y": -6.15,
+            "min_z": 2.65,
+            "max_x": 3.9499999999999997,
+            "max_y": -4.35,
+            "max_z": 2.9499999999999997
+          },
+          "length_m": 1.5
+        },
+        {
+          "seg_index": 3,
+          "bounds": {
+            "min_x": 3.65,
+            "min_y": -6.15,
+            "min_z": 1.6500000000000001,
+            "max_x": 3.9499999999999997,
+            "max_y": -5.85,
+            "max_z": 2.9499999999999997
+          },
+          "length_m": 1.0
+        }
+      ]
+    },
+    {
+      "system_id": "RT_P4_TO_ME_OIL_HE_AER",
+      "system_type": "Duct",
+      "raw_type": "seawater_cooling_discharge",
+      "description": "SWC pump discharge to ME LO HE \u2014 AER",
+      "profile_type": "circular",
+      "size": {
+        "diameter_mm": 250
+      },
+      "waypoints": [
+        {
+          "x": 5.2,
+          "y": -4.5,
+          "z": 1.5
+        },
+        {
+          "x": 5.2,
+          "y": -4.5,
+          "z": 2.8
+        },
+        {
+          "x": 5.6,
+          "y": -4.5,
+          "z": 2.8
+        },
+        {
+          "x": 5.6,
+          "y": -6.0,
+          "z": 2.8
+        },
+        {
+          "x": 5.6,
+          "y": -6.0,
+          "z": 1.8
+        }
+      ],
+      "segments": [
+        {
+          "seg_index": 0,
+          "bounds": {
+            "min_x": 5.075,
+            "min_y": -4.625,
+            "min_z": 1.375,
+            "max_x": 5.325,
+            "max_y": -4.375,
+            "max_z": 2.925
+          },
+          "length_m": 1.3
+        },
+        {
+          "seg_index": 1,
+          "bounds": {
+            "min_x": 5.075,
+            "min_y": -4.625,
+            "min_z": 2.675,
+            "max_x": 5.725,
+            "max_y": -4.375,
+            "max_z": 2.925
+          },
+          "length_m": 0.4
+        },
+        {
+          "seg_index": 2,
+          "bounds": {
+            "min_x": 5.475,
+            "min_y": -6.125,
+            "min_z": 2.675,
+            "max_x": 5.725,
+            "max_y": -4.375,
+            "max_z": 2.925
+          },
+          "length_m": 1.5
+        },
+        {
+          "seg_index": 3,
+          "bounds": {
+            "min_x": 5.475,
+            "min_y": -6.125,
+            "min_z": 1.675,
+            "max_x": 5.725,
+            "max_y": -5.875,
+            "max_z": 2.925
+          },
+          "length_m": 1.0
+        }
+      ]
+    },
+    {
+      "system_id": "RT_ME_COOL_HE_AER_TO_OVERBOARD",
+      "system_type": "Duct",
+      "raw_type": "seawater_cooling_return",
+      "description": "ME HE SW outlets to overboard \u2014 AER",
+      "profile_type": "circular",
+      "size": {
+        "diameter_mm": 350
+      },
+      "waypoints": [
+        {
+          "x": 4.2,
+          "y": -6.0,
+          "z": 1.4
+        },
+        {
+          "x": 4.2,
+          "y": -6.0,
+          "z": 4.6
+        },
+        {
+          "x": 13.0,
+          "y": -6.0,
+          "z": 4.6
+        },
+        {
+          "x": 13.0,
+          "y": -8.0,
+          "z": 4.6
+        },
+        {
+          "x": 13.0,
+          "y": -8.0,
+          "z": 0.8
+        }
+      ],
+      "segments": [
+        {
+          "seg_index": 0,
+          "bounds": {
+            "min_x": 4.025,
+            "min_y": -6.175,
+            "min_z": 1.2249999999999999,
+            "max_x": 4.375,
+            "max_y": -5.825,
+            "max_z": 4.7749999999999995
+          },
+          "length_m": 3.2
+        },
+        {
+          "seg_index": 1,
+          "bounds": {
+            "min_x": 4.025,
+            "min_y": -6.175,
+            "min_z": 4.425,
+            "max_x": 13.175,
+            "max_y": -5.825,
+            "max_z": 4.7749999999999995
+          },
+          "length_m": 8.8
+        },
+        {
+          "seg_index": 2,
+          "bounds": {
+            "min_x": 12.825,
+            "min_y": -8.175,
+            "min_z": 4.425,
+            "max_x": 13.175,
+            "max_y": -5.825,
+            "max_z": 4.7749999999999995
+          },
+          "length_m": 2.0
+        },
+        {
+          "seg_index": 3,
+          "bounds": {
+            "min_x": 12.825,
+            "min_y": -8.175,
+            "min_z": 0.625,
+            "max_x": 13.175,
+            "max_y": -7.825,
+            "max_z": 4.7749999999999995
+          },
+          "length_m": 3.8
+        }
+      ]
+    },
+    {
+      "system_id": "RT_DG_SWC_FER_SUPPLY",
+      "system_type": "Tray",
+      "raw_type": "seawater_cooling_dg",
+      "description": "SWC supply header to DG1-3 \u2014 common starboard header",
+      "profile_type": "circular",
+      "size": {
+        "diameter_mm": 200
+      },
+      "waypoints": [
+        {
+          "x": 1.0,
+          "y": 8.0,
+          "z": 4.8
+        },
+        {
+          "x": 12.0,
+          "y": 8.0,
+          "z": 4.8
+        },
+        {
+          "x": 12.0,
+          "y": 16.0,
+          "z": 4.8
+        },
+        {
+          "x": 12.0,
+          "y": 16.0,
+          "z": 1.2
+        }
+      ],
+      "segments": [
+        {
+          "seg_index": 0,
+          "bounds": {
+            "min_x": 0.9,
+            "min_y": 7.9,
+            "min_z": 4.7,
+            "max_x": 12.1,
+            "max_y": 8.1,
+            "max_z": 4.8999999999999995
+          },
+          "length_m": 11.0
+        },
+        {
+          "seg_index": 1,
+          "bounds": {
+            "min_x": 11.9,
+            "min_y": 7.9,
+            "min_z": 4.7,
+            "max_x": 12.1,
+            "max_y": 16.1,
+            "max_z": 4.8999999999999995
+          },
+          "length_m": 8.0
+        },
+        {
+          "seg_index": 2,
+          "bounds": {
+            "min_x": 11.9,
+            "min_y": 15.9,
+            "min_z": 1.0999999999999999,
+            "max_x": 12.1,
+            "max_y": 16.1,
+            "max_z": 4.8999999999999995
+          },
+          "length_m": 3.6
+        }
+      ]
+    },
+    {
+      "system_id": "RT_DG1_SWC",
+      "system_type": "Tray",
+      "raw_type": "seawater_cooling_dg_branch",
+      "description": "Branch \u2192 DG1",
+      "profile_type": "circular",
+      "size": {
+        "diameter_mm": 150
+      },
+      "waypoints": [
+        {
+          "x": 8.5,
+          "y": 16.0,
+          "z": 1.2
+        },
+        {
+          "x": 8.3,
+          "y": 16.0,
+          "z": 1.2
+        }
+      ],
+      "segments": [
+        {
+          "seg_index": 0,
+          "bounds": {
+            "min_x": 8.225000000000001,
+            "min_y": 15.925,
+            "min_z": 1.125,
+            "max_x": 8.575,
+            "max_y": 16.075,
+            "max_z": 1.275
+          },
+          "length_m": 0.2
+        }
+      ]
+    },
+    {
+      "system_id": "RT_DG2_SWC",
+      "system_type": "Tray",
+      "raw_type": "seawater_cooling_dg_branch",
+      "description": "Branch \u2192 DG2",
+      "profile_type": "circular",
+      "size": {
+        "diameter_mm": 150
+      },
+      "waypoints": [
+        {
+          "x": 10.5,
+          "y": 16.0,
+          "z": 1.2
+        },
+        {
+          "x": 10.3,
+          "y": 16.0,
+          "z": 1.2
+        }
+      ],
+      "segments": [
+        {
+          "seg_index": 0,
+          "bounds": {
+            "min_x": 10.225000000000001,
+            "min_y": 15.925,
+            "min_z": 1.125,
+            "max_x": 10.575,
+            "max_y": 16.075,
+            "max_z": 1.275
+          },
+          "length_m": 0.2
+        }
+      ]
+    },
+    {
+      "system_id": "RT_DG3_SWC",
+      "system_type": "Tray",
+      "raw_type": "seawater_cooling_dg_branch",
+      "description": "Branch \u2192 DG3",
+      "profile_type": "circular",
+      "size": {
+        "diameter_mm": 150
+      },
+      "waypoints": [
+        {
+          "x": 12.5,
+          "y": 16.0,
+          "z": 1.2
+        },
+        {
+          "x": 12.3,
+          "y": 16.0,
+          "z": 1.2
+        }
+      ],
+      "segments": [
+        {
+          "seg_index": 0,
+          "bounds": {
+            "min_x": 12.225000000000001,
+            "min_y": 15.925,
+            "min_z": 1.125,
+            "max_x": 12.575,
+            "max_y": 16.075,
+            "max_z": 1.275
+          },
+          "length_m": 0.2
+        }
+      ]
+    },
+    {
+      "system_id": "RT_DG_SWC_AER_SUPPLY",
+      "system_type": "Tray",
+      "raw_type": "seawater_cooling_dg",
+      "description": "SWC supply header to DG4-6 \u2014 AER",
+      "profile_type": "circular",
+      "size": {
+        "diameter_mm": 200
+      },
+      "waypoints": [
+        {
+          "x": 1.0,
+          "y": -8.0,
+          "z": 4.8
+        },
+        {
+          "x": 12.0,
+          "y": -8.0,
+          "z": 4.8
+        },
+        {
+          "x": 12.0,
+          "y": -10.0,
+          "z": 4.8
+        },
+        {
+          "x": 12.0,
+          "y": -10.0,
+          "z": 1.2
+        }
+      ],
+      "segments": [
+        {
+          "seg_index": 0,
+          "bounds": {
+            "min_x": 0.9,
+            "min_y": -8.1,
+            "min_z": 4.7,
+            "max_x": 12.1,
+            "max_y": -7.9,
+            "max_z": 4.8999999999999995
+          },
+          "length_m": 11.0
+        },
+        {
+          "seg_index": 1,
+          "bounds": {
+            "min_x": 11.9,
+            "min_y": -10.1,
+            "min_z": 4.7,
+            "max_x": 12.1,
+            "max_y": -7.9,
+            "max_z": 4.8999999999999995
+          },
+          "length_m": 2.0
+        },
+        {
+          "seg_index": 2,
+          "bounds": {
+            "min_x": 11.9,
+            "min_y": -10.1,
+            "min_z": 1.0999999999999999,
+            "max_x": 12.1,
+            "max_y": -9.9,
+            "max_z": 4.8999999999999995
+          },
+          "length_m": 3.6
+        }
+      ]
+    },
+    {
+      "system_id": "RT_DG4_SWC",
+      "system_type": "Tray",
+      "raw_type": "seawater_cooling_dg_branch",
+      "description": "Branch \u2192 DG4",
+      "profile_type": "circular",
+      "size": {
+        "diameter_mm": 150
+      },
+      "waypoints": [
+        {
+          "x": 8.5,
+          "y": -10.0,
+          "z": 1.2
+        },
+        {
+          "x": 8.3,
+          "y": -10.0,
+          "z": 1.2
+        }
+      ],
+      "segments": [
+        {
+          "seg_index": 0,
+          "bounds": {
+            "min_x": 8.225000000000001,
+            "min_y": -10.075,
+            "min_z": 1.125,
+            "max_x": 8.575,
+            "max_y": -9.925,
+            "max_z": 1.275
+          },
+          "length_m": 0.2
+        }
+      ]
+    },
+    {
+      "system_id": "RT_DG5_SWC",
+      "system_type": "Tray",
+      "raw_type": "seawater_cooling_dg_branch",
+      "description": "Branch \u2192 DG5",
+      "profile_type": "circular",
+      "size": {
+        "diameter_mm": 150
+      },
+      "waypoints": [
+        {
+          "x": 10.5,
+          "y": -10.0,
+          "z": 1.2
+        },
+        {
+          "x": 10.3,
+          "y": -10.0,
+          "z": 1.2
+        }
+      ],
+      "segments": [
+        {
+          "seg_index": 0,
+          "bounds": {
+            "min_x": 10.225000000000001,
+            "min_y": -10.075,
+            "min_z": 1.125,
+            "max_x": 10.575,
+            "max_y": -9.925,
+            "max_z": 1.275
+          },
+          "length_m": 0.2
+        }
+      ]
+    },
+    {
+      "system_id": "RT_DG6_SWC",
+      "system_type": "Tray",
+      "raw_type": "seawater_cooling_dg_branch",
+      "description": "Branch \u2192 DG6",
+      "profile_type": "circular",
+      "size": {
+        "diameter_mm": 150
+      },
+      "waypoints": [
+        {
+          "x": 12.5,
+          "y": -10.0,
+          "z": 1.2
+        },
+        {
+          "x": 12.3,
+          "y": -10.0,
+          "z": 1.2
+        }
+      ],
+      "segments": [
+        {
+          "seg_index": 0,
+          "bounds": {
+            "min_x": 12.225000000000001,
+            "min_y": -10.075,
+            "min_z": 1.125,
+            "max_x": 12.575,
+            "max_y": -9.925,
+            "max_z": 1.275
+          },
+          "length_m": 0.2
+        }
+      ]
+    },
+    {
+      "system_id": "RT_DG_FER_RETURN",
+      "system_type": "Duct",
+      "raw_type": "seawater_cooling_dg_return",
+      "description": "DG1-3 SW outlet collected and discharged overboard \u2014 FER",
+      "profile_type": "circular",
+      "size": {
+        "diameter_mm": 200
+      },
+      "waypoints": [
+        {
+          "x": 8.7,
+          "y": 16.0,
+          "z": 1.2
+        },
+        {
+          "x": 8.7,
+          "y": 16.0,
+          "z": 4.6
+        },
+        {
+          "x": 13.0,
+          "y": 16.0,
+          "z": 4.6
+        },
+        {
+          "x": 13.0,
+          "y": 8.0,
+          "z": 4.6
+        },
+        {
+          "x": 13.0,
+          "y": 8.0,
+          "z": 0.8
+        }
+      ],
+      "segments": [
+        {
+          "seg_index": 0,
+          "bounds": {
+            "min_x": 8.6,
+            "min_y": 15.9,
+            "min_z": 1.0999999999999999,
+            "max_x": 8.799999999999999,
+            "max_y": 16.1,
+            "max_z": 4.699999999999999
+          },
+          "length_m": 3.4
+        },
+        {
+          "seg_index": 1,
+          "bounds": {
+            "min_x": 8.6,
+            "min_y": 15.9,
+            "min_z": 4.5,
+            "max_x": 13.1,
+            "max_y": 16.1,
+            "max_z": 4.699999999999999
+          },
+          "length_m": 4.3
+        },
+        {
+          "seg_index": 2,
+          "bounds": {
+            "min_x": 12.9,
+            "min_y": 7.9,
+            "min_z": 4.5,
+            "max_x": 13.1,
+            "max_y": 16.1,
+            "max_z": 4.699999999999999
+          },
+          "length_m": 8.0
+        },
+        {
+          "seg_index": 3,
+          "bounds": {
+            "min_x": 12.9,
+            "min_y": 7.9,
+            "min_z": 0.7000000000000001,
+            "max_x": 13.1,
+            "max_y": 8.1,
+            "max_z": 4.699999999999999
+          },
+          "length_m": 3.8
+        }
+      ]
+    },
+    {
+      "system_id": "RT_AC_SWC_FER",
+      "system_type": "Tray",
+      "raw_type": "seawater_cooling_ac",
+      "description": "SWC supply to AC Plant 1&2 condenser",
+      "profile_type": "circular",
+      "size": {
+        "diameter_mm": 200
+      },
+      "waypoints": [
+        {
+          "x": 0.8,
+          "y": 4.5,
+          "z": 4.8
+        },
+        {
+          "x": 0.8,
+          "y": 2.5,
+          "z": 4.8
+        },
+        {
+          "x": 6.8,
+          "y": 2.5,
+          "z": 4.8
+        },
+        {
+          "x": 6.8,
+          "y": 2.5,
+          "z": 1.2
+        }
+      ],
+      "segments": [
+        {
+          "seg_index": 0,
+          "bounds": {
+            "min_x": 0.7000000000000001,
+            "min_y": 2.4,
+            "min_z": 4.7,
+            "max_x": 0.9,
+            "max_y": 4.6,
+            "max_z": 4.8999999999999995
+          },
+          "length_m": 2.0
+        },
+        {
+          "seg_index": 1,
+          "bounds": {
+            "min_x": 0.7000000000000001,
+            "min_y": 2.4,
+            "min_z": 4.7,
+            "max_x": 6.8999999999999995,
+            "max_y": 2.6,
+            "max_z": 4.8999999999999995
+          },
+          "length_m": 6.0
+        },
+        {
+          "seg_index": 2,
+          "bounds": {
+            "min_x": 6.7,
+            "min_y": 2.4,
+            "min_z": 1.0999999999999999,
+            "max_x": 6.8999999999999995,
+            "max_y": 2.6,
+            "max_z": 4.8999999999999995
+          },
+          "length_m": 3.6
+        }
+      ]
+    },
+    {
+      "system_id": "RT_AC_SWC_AER",
+      "system_type": "Tray",
+      "raw_type": "seawater_cooling_ac",
+      "description": "SWC supply to AC Plant 3&4 condenser",
+      "profile_type": "circular",
+      "size": {
+        "diameter_mm": 200
+      },
+      "waypoints": [
+        {
+          "x": 0.8,
+          "y": -4.5,
+          "z": 4.8
+        },
+        {
+          "x": 0.8,
+          "y": -2.5,
+          "z": 4.8
+        },
+        {
+          "x": 6.8,
+          "y": -2.5,
+          "z": 4.8
+        },
+        {
+          "x": 6.8,
+          "y": -2.5,
+          "z": 1.2
+        }
+      ],
+      "segments": [
+        {
+          "seg_index": 0,
+          "bounds": {
+            "min_x": 0.7000000000000001,
+            "min_y": -4.6,
+            "min_z": 4.7,
+            "max_x": 0.9,
+            "max_y": -2.4,
+            "max_z": 4.8999999999999995
+          },
+          "length_m": 2.0
+        },
+        {
+          "seg_index": 1,
+          "bounds": {
+            "min_x": 0.7000000000000001,
+            "min_y": -2.6,
+            "min_z": 4.7,
+            "max_x": 6.8999999999999995,
+            "max_y": -2.4,
+            "max_z": 4.8999999999999995
+          },
+          "length_m": 6.0
+        },
+        {
+          "seg_index": 2,
+          "bounds": {
+            "min_x": 6.7,
+            "min_y": -2.6,
+            "min_z": 1.0999999999999999,
+            "max_x": 6.8999999999999995,
+            "max_y": -2.4,
+            "max_z": 4.8999999999999995
+          },
+          "length_m": 3.6
+        }
+      ]
+    },
+    {
+      "system_id": "RT_RO_SWC",
+      "system_type": "Pipe",
+      "raw_type": "seawater_feed_ro",
+      "description": "Seawater feed to RO Plant 1 & 2 (pre-filtered branch)",
+      "profile_type": "circular",
+      "size": {
+        "diameter_mm": 100
+      },
+      "waypoints": [
+        {
+          "x": 0.8,
+          "y": -4.5,
+          "z": 4.8
+        },
+        {
+          "x": 0.8,
+          "y": -1.5,
+          "z": 4.8
+        },
+        {
+          "x": 4.8,
+          "y": -1.5,
+          "z": 4.8
+        },
+        {
+          "x": 4.8,
+          "y": -1.5,
+          "z": 0.9
+        },
+        {
+          "x": 6.3,
+          "y": -1.5,
+          "z": 0.9
+        }
+      ],
+      "segments": [
+        {
+          "seg_index": 0,
+          "bounds": {
+            "min_x": 0.75,
+            "min_y": -4.55,
+            "min_z": 4.75,
+            "max_x": 0.8500000000000001,
+            "max_y": -1.45,
+            "max_z": 4.85
+          },
+          "length_m": 3.0
+        },
+        {
+          "seg_index": 1,
+          "bounds": {
+            "min_x": 0.75,
+            "min_y": -1.55,
+            "min_z": 4.75,
+            "max_x": 4.85,
+            "max_y": -1.45,
+            "max_z": 4.85
+          },
+          "length_m": 4.0
+        },
+        {
+          "seg_index": 2,
+          "bounds": {
+            "min_x": 4.75,
+            "min_y": -1.55,
+            "min_z": 0.85,
+            "max_x": 4.85,
+            "max_y": -1.45,
+            "max_z": 4.85
+          },
+          "length_m": 3.9
+        },
+        {
+          "seg_index": 3,
+          "bounds": {
+            "min_x": 4.75,
+            "min_y": -1.55,
+            "min_z": 0.85,
+            "max_x": 6.35,
+            "max_y": -1.45,
+            "max_z": 0.9500000000000001
+          },
+          "length_m": 1.5
+        }
+      ]
+    },
+    {
+      "system_id": "RT_XCONNECT_FER_AER",
+      "system_type": "Tray",
+      "raw_type": "seawater_crossover",
+      "description": "Emergency cross-connect: FER SWC pumps can serve AER HEs and vice versa",
+      "profile_type": "circular",
+      "size": {
+        "diameter_mm": 300
+      },
+      "waypoints": [
+        {
+          "x": 0.8,
+          "y": 0.0,
+          "z": 4.8
+        },
+        {
+          "x": 0.8,
+          "y": 0.0,
+          "z": 4.8
+        }
+      ],
+      "segments": [
+        {
+          "seg_index": 0,
+          "bounds": {
+            "min_x": 0.65,
+            "min_y": -0.15,
+            "min_z": 4.6499999999999995,
+            "max_x": 0.9500000000000001,
+            "max_y": 0.15,
+            "max_z": 4.95
+          },
+          "length_m": 0.0
+        }
+      ]
+    }
+  ],
+  "clashes": [
+    {
+      "system_id": "RT_SW_SUCTION_FER",
+      "seg_index": 4,
+      "start_wp": {
+        "x": 0.8,
+        "y": 4.5,
+        "z": 1.2
+      },
+      "end_wp": {
+        "x": 2.6,
+        "y": 4.5,
+        "z": 0.9
+      },
+      "clashing_oid": "SWC_P1",
+      "clashing_name": "ME Coolant SWC Pump (Fwd) [pump]",
+      "overlap_volume": 0.168
+    },
+    {
+      "system_id": "RT_SW_SUCTION_FER_P1B",
+      "seg_index": 1,
+      "start_wp": {
+        "x": 0.8,
+        "y": 4.5,
+        "z": 1.2
+      },
+      "end_wp": {
+        "x": 3.2,
+        "y": 4.5,
+        "z": 0.9
+      },
+      "clashing_oid": "SWC_P1",
+      "clashing_name": "ME Coolant SWC Pump (Fwd) [pump]",
+      "overlap_volume": 0.207
+    },
+    {
+      "system_id": "RT_SW_SUCTION_FER_P1B",
+      "seg_index": 1,
+      "start_wp": {
+        "x": 0.8,
+        "y": 4.5,
+        "z": 1.2
+      },
+      "end_wp": {
+        "x": 3.2,
+        "y": 4.5,
+        "z": 0.9
+      },
+      "clashing_oid": "SWC_P1B",
+      "clashing_name": "ME Coolant SWC Pump (Fwd) \u2014 Standby [pump]",
+      "overlap_volume": 0.099
+    },
+    {
+      "system_id": "RT_SW_SUCTION_FER_P3",
+      "seg_index": 1,
+      "start_wp": {
+        "x": 0.8,
+        "y": 4.5,
+        "z": 1.2
+      },
+      "end_wp": {
+        "x": 4.8,
+        "y": 4.5,
+        "z": 0.9
+      },
+      "clashing_oid": "SWC_P1",
+      "clashing_name": "ME Coolant SWC Pump (Fwd) [pump]",
+      "overlap_volume": 0.165
+    },
+    {
+      "system_id": "RT_SW_SUCTION_FER_P3",
+      "seg_index": 1,
+      "start_wp": {
+        "x": 0.8,
+        "y": 4.5,
+        "z": 1.2
+      },
+      "end_wp": {
+        "x": 4.8,
+        "y": 4.5,
+        "z": 0.9
+      },
+      "clashing_oid": "SWC_P1B",
+      "clashing_name": "ME Coolant SWC Pump (Fwd) \u2014 Standby [pump]",
+      "overlap_volume": 0.165
+    },
+    {
+      "system_id": "RT_SW_SUCTION_FER_P3",
+      "seg_index": 1,
+      "start_wp": {
+        "x": 0.8,
+        "y": 4.5,
+        "z": 1.2
+      },
+      "end_wp": {
+        "x": 4.8,
+        "y": 4.5,
+        "z": 0.9
+      },
+      "clashing_oid": "SWC_P3",
+      "clashing_name": "ME LO SWC Pump (Fwd) [pump]",
+      "overlap_volume": 0.07219
+    },
+    {
+      "system_id": "RT_SW_SUCTION_AER",
+      "seg_index": 4,
+      "start_wp": {
+        "x": 0.8,
+        "y": -4.5,
+        "z": 1.2
+      },
+      "end_wp": {
+        "x": 2.6,
+        "y": -4.5,
+        "z": 0.9
+      },
+      "clashing_oid": "SWC_P2",
+      "clashing_name": "ME Coolant SWC Pump (Aft) [pump]",
+      "overlap_volume": 0.168
+    },
+    {
+      "system_id": "RT_SW_SUCTION_AER_P2B",
+      "seg_index": 1,
+      "start_wp": {
+        "x": 0.8,
+        "y": -4.5,
+        "z": 1.2
+      },
+      "end_wp": {
+        "x": 3.2,
+        "y": -4.5,
+        "z": 0.9
+      },
+      "clashing_oid": "SWC_P2",
+      "clashing_name": "ME Coolant SWC Pump (Aft) [pump]",
+      "overlap_volume": 0.207
+    },
+    {
+      "system_id": "RT_SW_SUCTION_AER_P2B",
+      "seg_index": 1,
+      "start_wp": {
+        "x": 0.8,
+        "y": -4.5,
+        "z": 1.2
+      },
+      "end_wp": {
+        "x": 3.2,
+        "y": -4.5,
+        "z": 0.9
+      },
+      "clashing_oid": "SWC_P2B",
+      "clashing_name": "ME Coolant SWC Pump (Aft) \u2014 Standby [pump]",
+      "overlap_volume": 0.099
+    },
+    {
+      "system_id": "RT_SW_SUCTION_AER_P4",
+      "seg_index": 1,
+      "start_wp": {
+        "x": 0.8,
+        "y": -4.5,
+        "z": 1.2
+      },
+      "end_wp": {
+        "x": 4.8,
+        "y": -4.5,
+        "z": 0.9
+      },
+      "clashing_oid": "SWC_P2",
+      "clashing_name": "ME Coolant SWC Pump (Aft) [pump]",
+      "overlap_volume": 0.165
+    },
+    {
+      "system_id": "RT_SW_SUCTION_AER_P4",
+      "seg_index": 1,
+      "start_wp": {
+        "x": 0.8,
+        "y": -4.5,
+        "z": 1.2
+      },
+      "end_wp": {
+        "x": 4.8,
+        "y": -4.5,
+        "z": 0.9
+      },
+      "clashing_oid": "SWC_P2B",
+      "clashing_name": "ME Coolant SWC Pump (Aft) \u2014 Standby [pump]",
+      "overlap_volume": 0.165
+    },
+    {
+      "system_id": "RT_SW_SUCTION_AER_P4",
+      "seg_index": 1,
+      "start_wp": {
+        "x": 0.8,
+        "y": -4.5,
+        "z": 1.2
+      },
+      "end_wp": {
+        "x": 4.8,
+        "y": -4.5,
+        "z": 0.9
+      },
+      "clashing_oid": "SWC_P4",
+      "clashing_name": "ME LO SWC Pump (Aft) [pump]",
+      "overlap_volume": 0.07219
+    },
+    {
+      "system_id": "RT_P1_TO_ME_COOL_HE_FER",
+      "seg_index": 0,
+      "start_wp": {
+        "x": 3.0,
+        "y": 4.5,
+        "z": 1.5
+      },
+      "end_wp": {
+        "x": 3.0,
+        "y": 4.5,
+        "z": 2.8
+      },
+      "clashing_oid": "SWC_P1",
+      "clashing_name": "ME Coolant SWC Pump (Fwd) [pump]",
+      "overlap_volume": 0.0315
+    },
+    {
+      "system_id": "RT_P1_TO_ME_COOL_HE_FER",
+      "seg_index": 0,
+      "start_wp": {
+        "x": 3.0,
+        "y": 4.5,
+        "z": 1.5
+      },
+      "end_wp": {
+        "x": 3.0,
+        "y": 4.5,
+        "z": 2.8
+      },
+      "clashing_oid": "SWC_P1B",
+      "clashing_name": "ME Coolant SWC Pump (Fwd) \u2014 Standby [pump]",
+      "overlap_volume": 0.0315
+    },
+    {
+      "system_id": "RT_P1_TO_ME_COOL_HE_FER",
+      "seg_index": 3,
+      "start_wp": {
+        "x": 3.8,
+        "y": 6.0,
+        "z": 2.8
+      },
+      "end_wp": {
+        "x": 3.8,
+        "y": 6.0,
+        "z": 1.8
+      },
+      "clashing_oid": "ME_COOLANT_HE_FER",
+      "clashing_name": "Main Engine Coolant Heat Exchanger (Fwd) [heat_exchanger]",
+      "overlap_volume": 0.0855
+    },
+    {
+      "system_id": "RT_P1_TO_ME_COOL_HE_FER",
+      "seg_index": 4,
+      "start_wp": {
+        "x": 3.8,
+        "y": 6.0,
+        "z": 1.8
+      },
+      "end_wp": {
+        "x": 3.8,
+        "y": 6.0,
+        "z": 1.8
+      },
+      "clashing_oid": "ME_COOLANT_HE_FER",
+      "clashing_name": "Main Engine Coolant Heat Exchanger (Fwd) [heat_exchanger]",
+      "overlap_volume": 0.027
+    },
+    {
+      "system_id": "RT_P3_TO_ME_OIL_HE_FER",
+      "seg_index": 0,
+      "start_wp": {
+        "x": 5.2,
+        "y": 4.5,
+        "z": 1.5
+      },
+      "end_wp": {
+        "x": 5.2,
+        "y": 4.5,
+        "z": 2.8
+      },
+      "clashing_oid": "SWC_P3",
+      "clashing_name": "ME LO SWC Pump (Fwd) [pump]",
+      "overlap_volume": 0.02031
+    },
+    {
+      "system_id": "RT_P3_TO_ME_OIL_HE_FER",
+      "seg_index": 3,
+      "start_wp": {
+        "x": 5.6,
+        "y": 6.0,
+        "z": 2.8
+      },
+      "end_wp": {
+        "x": 5.6,
+        "y": 6.0,
+        "z": 1.8
+      },
+      "clashing_oid": "ME_OIL_HE_FER",
+      "clashing_name": "Main Engine LO Heat Exchanger (Fwd) [heat_exchanger]",
+      "overlap_volume": 0.05781
+    },
+    {
+      "system_id": "RT_ME_COOL_HE_FER_TO_OVERBOARD",
+      "seg_index": 0,
+      "start_wp": {
+        "x": 4.2,
+        "y": 6.0,
+        "z": 1.4
+      },
+      "end_wp": {
+        "x": 4.2,
+        "y": 6.0,
+        "z": 4.6
+      },
+      "clashing_oid": "ME_COOLANT_HE_FER",
+      "clashing_name": "Main Engine Coolant Heat Exchanger (Fwd) [heat_exchanger]",
+      "overlap_volume": 0.16844
+    },
+    {
+      "system_id": "RT_ME_COOL_HE_FER_TO_OVERBOARD",
+      "seg_index": 3,
+      "start_wp": {
+        "x": 13.0,
+        "y": 8.0,
+        "z": 4.6
+      },
+      "end_wp": {
+        "x": 13.0,
+        "y": 8.0,
+        "z": 0.8
+      },
+      "clashing_oid": "SW_OUTLET_BOX_FER",
+      "clashing_name": "Seawater Overboard Outlet (Fwd ER) [overboard_valve]",
+      "overlap_volume": 0.07044
+    },
+    {
+      "system_id": "RT_ME_COOL_HE_FER_TO_OVERBOARD",
+      "seg_index": 4,
+      "start_wp": {
+        "x": 13.0,
+        "y": 8.0,
+        "z": 0.8
+      },
+      "end_wp": {
+        "x": 13.0,
+        "y": 8.0,
+        "z": 0.8
+      },
+      "clashing_oid": "SW_OUTLET_BOX_FER",
+      "clashing_name": "Seawater Overboard Outlet (Fwd ER) [overboard_valve]",
+      "overlap_volume": 0.04288
+    },
+    {
+      "system_id": "RT_P2_TO_ME_COOL_HE_AER",
+      "seg_index": 0,
+      "start_wp": {
+        "x": 3.0,
+        "y": -4.5,
+        "z": 1.5
+      },
+      "end_wp": {
+        "x": 3.0,
+        "y": -4.5,
+        "z": 2.8
+      },
+      "clashing_oid": "SWC_P2",
+      "clashing_name": "ME Coolant SWC Pump (Aft) [pump]",
+      "overlap_volume": 0.0315
+    },
+    {
+      "system_id": "RT_P2_TO_ME_COOL_HE_AER",
+      "seg_index": 0,
+      "start_wp": {
+        "x": 3.0,
+        "y": -4.5,
+        "z": 1.5
+      },
+      "end_wp": {
+        "x": 3.0,
+        "y": -4.5,
+        "z": 2.8
+      },
+      "clashing_oid": "SWC_P2B",
+      "clashing_name": "ME Coolant SWC Pump (Aft) \u2014 Standby [pump]",
+      "overlap_volume": 0.0315
+    },
+    {
+      "system_id": "RT_P2_TO_ME_COOL_HE_AER",
+      "seg_index": 3,
+      "start_wp": {
+        "x": 3.8,
+        "y": -6.0,
+        "z": 2.8
+      },
+      "end_wp": {
+        "x": 3.8,
+        "y": -6.0,
+        "z": 1.8
+      },
+      "clashing_oid": "ME_COOLANT_HE_AER",
+      "clashing_name": "Main Engine Coolant Heat Exchanger (Aft) [heat_exchanger]",
+      "overlap_volume": 0.0855
+    },
+    {
+      "system_id": "RT_P4_TO_ME_OIL_HE_AER",
+      "seg_index": 0,
+      "start_wp": {
+        "x": 5.2,
+        "y": -4.5,
+        "z": 1.5
+      },
+      "end_wp": {
+        "x": 5.2,
+        "y": -4.5,
+        "z": 2.8
+      },
+      "clashing_oid": "SWC_P4",
+      "clashing_name": "ME LO SWC Pump (Aft) [pump]",
+      "overlap_volume": 0.02031
+    },
+    {
+      "system_id": "RT_P4_TO_ME_OIL_HE_AER",
+      "seg_index": 3,
+      "start_wp": {
+        "x": 5.6,
+        "y": -6.0,
+        "z": 2.8
+      },
+      "end_wp": {
+        "x": 5.6,
+        "y": -6.0,
+        "z": 1.8
+      },
+      "clashing_oid": "ME_OIL_HE_AER",
+      "clashing_name": "Main Engine LO Heat Exchanger (Aft) [heat_exchanger]",
+      "overlap_volume": 0.05781
+    },
+    {
+      "system_id": "RT_ME_COOL_HE_AER_TO_OVERBOARD",
+      "seg_index": 0,
+      "start_wp": {
+        "x": 4.2,
+        "y": -6.0,
+        "z": 1.4
+      },
+      "end_wp": {
+        "x": 4.2,
+        "y": -6.0,
+        "z": 4.6
+      },
+      "clashing_oid": "ME_COOLANT_HE_AER",
+      "clashing_name": "Main Engine Coolant Heat Exchanger (Aft) [heat_exchanger]",
+      "overlap_volume": 0.16844
+    },
+    {
+      "system_id": "RT_ME_COOL_HE_AER_TO_OVERBOARD",
+      "seg_index": 3,
+      "start_wp": {
+        "x": 13.0,
+        "y": -8.0,
+        "z": 4.6
+      },
+      "end_wp": {
+        "x": 13.0,
+        "y": -8.0,
+        "z": 0.8
+      },
+      "clashing_oid": "SW_OUTLET_BOX_AER",
+      "clashing_name": "Seawater Overboard Outlet (Aft ER) [overboard_valve]",
+      "overlap_volume": 0.07044
+    },
+    {
+      "system_id": "RT_DG_SWC_FER_SUPPLY",
+      "seg_index": 2,
+      "start_wp": {
+        "x": 12.0,
+        "y": 16.0,
+        "z": 4.8
+      },
+      "end_wp": {
+        "x": 12.0,
+        "y": 16.0,
+        "z": 1.2
+      },
+      "clashing_oid": "DG3",
+      "clashing_name": "Diesel Generator 3 [generator]",
+      "overlap_volume": 0.004
+    },
+    {
+      "system_id": "RT_DG1_SWC",
+      "seg_index": 0,
+      "start_wp": {
+        "x": 8.5,
+        "y": 16.0,
+        "z": 1.2
+      },
+      "end_wp": {
+        "x": 8.3,
+        "y": 16.0,
+        "z": 1.2
+      },
+      "clashing_oid": "DG1",
+      "clashing_name": "Diesel Generator 1 [generator]",
+      "overlap_volume": 0.00787
+    },
+    {
+      "system_id": "RT_DG2_SWC",
+      "seg_index": 0,
+      "start_wp": {
+        "x": 10.5,
+        "y": 16.0,
+        "z": 1.2
+      },
+      "end_wp": {
+        "x": 10.3,
+        "y": 16.0,
+        "z": 1.2
+      },
+      "clashing_oid": "DG2",
+      "clashing_name": "Diesel Generator 2 [generator]",
+      "overlap_volume": 0.00787
+    },
+    {
+      "system_id": "RT_DG3_SWC",
+      "seg_index": 0,
+      "start_wp": {
+        "x": 12.5,
+        "y": 16.0,
+        "z": 1.2
+      },
+      "end_wp": {
+        "x": 12.3,
+        "y": 16.0,
+        "z": 1.2
+      },
+      "clashing_oid": "DG3",
+      "clashing_name": "Diesel Generator 3 [generator]",
+      "overlap_volume": 0.00787
+    },
+    {
+      "system_id": "RT_DG_SWC_AER_SUPPLY",
+      "seg_index": 2,
+      "start_wp": {
+        "x": 12.0,
+        "y": -10.0,
+        "z": 4.8
+      },
+      "end_wp": {
+        "x": 12.0,
+        "y": -10.0,
+        "z": 1.2
+      },
+      "clashing_oid": "DG6",
+      "clashing_name": "Diesel Generator 6 [generator]",
+      "overlap_volume": 0.004
+    },
+    {
+      "system_id": "RT_DG4_SWC",
+      "seg_index": 0,
+      "start_wp": {
+        "x": 8.5,
+        "y": -10.0,
+        "z": 1.2
+      },
+      "end_wp": {
+        "x": 8.3,
+        "y": -10.0,
+        "z": 1.2
+      },
+      "clashing_oid": "DG4",
+      "clashing_name": "Diesel Generator 4 [generator]",
+      "overlap_volume": 0.00787
+    },
+    {
+      "system_id": "RT_DG5_SWC",
+      "seg_index": 0,
+      "start_wp": {
+        "x": 10.5,
+        "y": -10.0,
+        "z": 1.2
+      },
+      "end_wp": {
+        "x": 10.3,
+        "y": -10.0,
+        "z": 1.2
+      },
+      "clashing_oid": "DG5",
+      "clashing_name": "Diesel Generator 5 [generator]",
+      "overlap_volume": 0.00787
+    },
+    {
+      "system_id": "RT_DG6_SWC",
+      "seg_index": 0,
+      "start_wp": {
+        "x": 12.5,
+        "y": -10.0,
+        "z": 1.2
+      },
+      "end_wp": {
+        "x": 12.3,
+        "y": -10.0,
+        "z": 1.2
+      },
+      "clashing_oid": "DG6",
+      "clashing_name": "Diesel Generator 6 [generator]",
+      "overlap_volume": 0.00787
+    },
+    {
+      "system_id": "RT_DG_FER_RETURN",
+      "seg_index": 0,
+      "start_wp": {
+        "x": 8.7,
+        "y": 16.0,
+        "z": 1.2
+      },
+      "end_wp": {
+        "x": 8.7,
+        "y": 16.0,
+        "z": 4.6
+      },
+      "clashing_oid": "DG1",
+      "clashing_name": "Diesel Generator 1 [generator]",
+      "overlap_volume": 0.008
+    },
+    {
+      "system_id": "RT_DG_FER_RETURN",
+      "seg_index": 3,
+      "start_wp": {
+        "x": 13.0,
+        "y": 8.0,
+        "z": 4.6
+      },
+      "end_wp": {
+        "x": 13.0,
+        "y": 8.0,
+        "z": 0.8
+      },
+      "clashing_oid": "SW_OUTLET_BOX_FER",
+      "clashing_name": "Seawater Overboard Outlet (Fwd ER) [overboard_valve]",
+      "overlap_volume": 0.02
+    },
+    {
+      "system_id": "RT_AC_SWC_FER",
+      "seg_index": 2,
+      "start_wp": {
+        "x": 6.8,
+        "y": 2.5,
+        "z": 4.8
+      },
+      "end_wp": {
+        "x": 6.8,
+        "y": 2.5,
+        "z": 1.2
+      },
+      "clashing_oid": "AC_PLANT_12",
+      "clashing_name": "AC Plant 1 & 2 [hvac_chiller]",
+      "overlap_volume": 0.016
+    },
+    {
+      "system_id": "RT_AC_SWC_AER",
+      "seg_index": 2,
+      "start_wp": {
+        "x": 6.8,
+        "y": -2.5,
+        "z": 4.8
+      },
+      "end_wp": {
+        "x": 6.8,
+        "y": -2.5,
+        "z": 1.2
+      },
+      "clashing_oid": "AC_PLANT_34",
+      "clashing_name": "AC Plant 3 & 4 [hvac_chiller]",
+      "overlap_volume": 0.016
+    },
+    {
+      "system_id": "RT_RO_SWC",
+      "seg_index": 2,
+      "start_wp": {
+        "x": 4.8,
+        "y": -1.5,
+        "z": 4.8
+      },
+      "end_wp": {
+        "x": 4.8,
+        "y": -1.5,
+        "z": 0.9
+      },
+      "clashing_oid": "RO_PLANT_1",
+      "clashing_name": "RO Plant 1 [ro_plant]",
+      "overlap_volume": 0.0055
+    },
+    {
+      "system_id": "RT_RO_SWC",
+      "seg_index": 3,
+      "start_wp": {
+        "x": 4.8,
+        "y": -1.5,
+        "z": 0.9
+      },
+      "end_wp": {
+        "x": 6.3,
+        "y": -1.5,
+        "z": 0.9
+      },
+      "clashing_oid": "RO_PLANT_1",
+      "clashing_name": "RO Plant 1 [ro_plant]",
+      "overlap_volume": 0.0075
+    },
+    {
+      "system_id": "RT_RO_SWC",
+      "seg_index": 3,
+      "start_wp": {
+        "x": 4.8,
+        "y": -1.5,
+        "z": 0.9
+      },
+      "end_wp": {
+        "x": 6.3,
+        "y": -1.5,
+        "z": 0.9
+      },
+      "clashing_oid": "RO_PLANT_2",
+      "clashing_name": "RO Plant 2 [ro_plant]",
+      "overlap_volume": 0.0035
+    }
+  ],
+  "clash_segment_keys": [
+    "RT_P3_TO_ME_OIL_HE_FER::0",
+    "RT_DG_SWC_FER_SUPPLY::2",
+    "RT_P4_TO_ME_OIL_HE_AER::0",
+    "RT_DG4_SWC::0",
+    "RT_ME_COOL_HE_AER_TO_OVERBOARD::0",
+    "RT_P2_TO_ME_COOL_HE_AER::3",
+    "RT_SW_SUCTION_FER_P1B::1",
+    "RT_RO_SWC::3",
+    "RT_DG5_SWC::0",
+    "RT_SW_SUCTION_AER_P4::1",
+    "RT_P4_TO_ME_OIL_HE_AER::3",
+    "RT_DG_SWC_AER_SUPPLY::2",
+    "RT_P3_TO_ME_OIL_HE_FER::3",
+    "RT_ME_COOL_HE_FER_TO_OVERBOARD::3",
+    "RT_ME_COOL_HE_AER_TO_OVERBOARD::3",
+    "RT_P1_TO_ME_COOL_HE_FER::0",
+    "RT_DG3_SWC::0",
+    "RT_P2_TO_ME_COOL_HE_AER::0",
+    "RT_SW_SUCTION_FER_P3::1",
+    "RT_DG1_SWC::0",
+    "RT_RO_SWC::2",
+    "RT_SW_SUCTION_AER_P2B::1",
+    "RT_ME_COOL_HE_FER_TO_OVERBOARD::0",
+    "RT_DG_FER_RETURN::0",
+    "RT_DG_FER_RETURN::3",
+    "RT_ME_COOL_HE_FER_TO_OVERBOARD::4",
+    "RT_DG2_SWC::0",
+    "RT_AC_SWC_AER::2",
+    "RT_DG6_SWC::0",
+    "RT_AC_SWC_FER::2",
+    "RT_SW_SUCTION_FER::4",
+    "RT_P1_TO_ME_COOL_HE_FER::3",
+    "RT_P1_TO_ME_COOL_HE_FER::4",
+    "RT_SW_SUCTION_AER::4"
+  ],
+  "clashing_cos_oids": [
+    "ME_OIL_HE_AER",
+    "SWC_P1",
+    "SW_OUTLET_BOX_AER",
+    "DG1",
+    "DG6",
+    "RO_PLANT_1",
+    "DG4",
+    "SW_OUTLET_BOX_FER",
+    "DG2",
+    "ME_OIL_HE_FER",
+    "AC_PLANT_12",
+    "ME_COOLANT_HE_FER",
+    "DG3",
+    "SWC_P3",
+    "SWC_P4",
+    "RO_PLANT_2",
+    "AC_PLANT_34",
+    "DG5",
+    "SWC_P2",
+    "SWC_P2B",
+    "ME_COOLANT_HE_AER",
+    "SWC_P1B"
+  ],
+  "rule_violations": []
+}

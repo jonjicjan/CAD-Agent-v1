@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CAD Engineering Agent</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="app">
+
+  <!-- ── GLOBAL ERROR TOAST ── -->
+  <div id="g-toast">
+    <button onclick="UI.clearError()">✕</button>
+    <span id="g-toast-text"></span>
+  </div>
+
+  <!-- ── NAVIGATION ── -->
+  <nav class="nav">
+    <div class="nav-brand">
+      <div class="nav-icon">⬡</div>
+      <span class="nav-title">CAD Agent</span>
+    </div>
+
+    <button class="tab active" id="tab-upload" onclick="App.goTab('upload')">Upload</button>
+    <button class="tab" id="tab-results" onclick="App.goTab('results')">
+      Results
+      <span id="badge-issues" class="badge red" style="display:none">0</span>
+    </button>
+    <button class="tab" id="tab-viewer" onclick="App.goTab('viewer')">3D Preview</button>
+    <button class="tab" id="tab-kb" onclick="App.goTab('kb')">
+      Knowledge Base
+      <span id="badge-kb" class="badge green">0</span>
+    </button>
+    <button class="tab" id="tab-export" onclick="App.goTab('export')">Export</button>
+
+    <span class="status-pill idle" id="status-pill">Ready</span>
+  </nav>
+
+  <!-- ════════════════════════════════════════════
+       UPLOAD PAGE
+  ════════════════════════════════════════════ -->
+  <div class="page active" id="page-upload">
+    <div class="upload-body">
+
+      <!-- Drop zone -->
+      <div class="drop-zone" id="drop-zone" onclick="document.getElementById('file-input').click()">
+        <input type="file" id="file-input" accept=".json,.dxf,.ifc" style="display:none">
+        <div class="dz-icon">⬆</div>
+        <p class="dz-title" id="dz-title">Drop any CAD or JSON file here</p>
+        <p class="dz-sub"   id="dz-sub">Any JSON structure — agent auto-detects the schema</p>
+        <p class="dz-file"  id="dz-file"></p>
+        <p class="dz-err"   id="dz-err"></p>
+      </div>
+
+      <!-- Schema detection result -->
+      <div class="schema-panel" id="schema-panel">
+        <div class="sp-head">
+          <span class="sp-badge known" id="sp-badge">detected</span>
+          <span class="sp-title" id="sp-title">Schema detection</span>
+        </div>
+        <div class="sp-body"   id="sp-body"></div>
+        <div class="sp-fields" id="sp-fields"></div>
+      </div>
+
+      <!-- Supported formats grid -->
+      <div class="fmt-grid">
+        <div class="fmt-card"><div class="fmt-name">Any JSON</div><div class="fmt-desc">AI auto-detects schema</div></div>
+        <div class="fmt-card"><div class="fmt-name">SWC / CADMATIC</div><div class="fmt-desc">components + routes + zones</div></div>
+        <div class="fmt-card"><div class="fmt-name">Scene JSON</div><div class="fmt-desc">cos_objects + routes</div></div>
+        <div class="fmt-card"><div class="fmt-name">P&amp;ID JSON</div><div class="fmt-desc">lines + equipment + tags</div></div>
+        <div class="fmt-card"><div class="fmt-name">BIM / IFC JSON</div><div class="fmt-desc">elements + geometry</div></div>
+        <div class="fmt-card"><div class="fmt-name">Custom export</div><div class="fmt-desc">any 3D coordinate structure</div></div>
+      </div>
+
+      <!-- What the agent checks -->
+      <div class="checks-box">
+        <div class="checks-title">Agent checks on every file</div>
+        <div class="checks-grid">
+          <span>⊗ AABB geometric clashes</span>
+          <span>⚑ Engineering rule violations</span>
+          <span>◎ Profile sizing errors</span>
+          <span>↯ Routing logic errors</span>
+          <span>↕ Separation distance checks</span>
+          <span>? Missing / incomplete data</span>
+        </div>
+      </div>
+
+    </div><!-- /upload-body -->
+
+    <!-- Agent console (pinned to bottom of upload page) -->
+    <div class="console-wrap">
+      <div class="progress-track">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+      <div class="console-bar" onclick="App.toggleConsole()">
+        <div class="dot" id="console-dot"></div>
+        <span class="label">Agent console</span>
+        <span class="console-toggle" id="console-toggle">▾</span>
+      </div>
+      <div class="console-log" id="console-log"></div>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════
+       RESULTS PAGE
+  ════════════════════════════════════════════ -->
+  <div class="page" id="page-results">
+    <div class="results-body" id="results-body">
+      <div class="empty-state">
+        <div class="empty-state-icon">⬡</div>
+        <div class="empty-state-text">Upload a file to see analysis results</div>
+      </div>
+      <div class="schema-info-bar" id="schema-info-bar"></div>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════
+       3D VIEWER PAGE
+  ════════════════════════════════════════════ -->
+  <div class="page" id="page-viewer">
+    <div class="viewer-wrap" id="viewer-wrap">
+
+      <!-- Empty state -->
+      <div class="viewer-empty" id="viewer-empty">
+        <div class="viewer-empty-icon">⬡</div>
+        <div class="viewer-empty-text">Upload a file to render the 3D preview</div>
+        <button class="load-demo-btn" onclick="App.loadDemoScene()">
+          ▶ Load Demo — INS MPV 18000 (SWC)
+        </button>
+      </div>
+
+      <!-- Three.js canvas -->
+      <canvas id="three-canvas"></canvas>
+
+      <!-- Controls toolbar -->
+      <div class="viewer-toolbar" id="viewer-toolbar">
+        <button class="v-btn active" id="vbtn-asis"   onclick="App.viewerToggleAsis()">As-Is</button>
+        <button class="v-btn active" id="vbtn-routes" onclick="App.viewerToggleRoutes()">Routes</button>
+        <button class="v-btn"        id="vbtn-wire"   onclick="App.viewerToggleWire()">Wireframe</button>
+        <button class="v-btn"                         onclick="App.viewerResetCam()">Reset cam</button>
+      </div>
+
+      <!-- Legend -->
+      <div class="viewer-legend" id="viewer-legend">
+        <div class="legend-row"><div class="legend-swatch" style="background:#0d2035;border:1px dashed #1e3a5f"></div>Zone / Room</div>
+        <div class="legend-row"><div class="legend-swatch" style="background:#1a365d"></div>Equipment</div>
+        <div class="legend-row"><div class="legend-swatch" style="background:#374151"></div>Structure</div>
+        <div class="legend-row"><div class="legend-swatch" style="background:#1e3a8a"></div>Pipe / line</div>
+        <div class="legend-row"><div class="legend-swatch" style="background:#14532d"></div>Duct</div>
+        <div class="legend-row"><div class="legend-swatch" style="background:#78350f"></div>Tray / cable</div>
+        <div class="legend-row"><div class="legend-swatch" style="background:#7f1d1d;border:1px solid #ef4444"></div>Clash</div>
+      </div>
+
+      <div class="viewer-hint" id="viewer-hint">drag = rotate &nbsp;·&nbsp; scroll = zoom &nbsp;·&nbsp; right-drag = pan</div>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════
+       KNOWLEDGE BASE PAGE
+  ════════════════════════════════════════════ -->
+  <div class="page" id="page-kb">
+    <div class="kb-body">
+
+      <div class="kb-header">
+        <span class="kb-title">Engineering Knowledge Base</span>
+        <span class="kb-count" id="kb-count">0 rules</span>
+        <button class="kb-add-btn" onclick="App.openAddRuleForm()">+ Add rule</button>
+      </div>
+
+      <div class="kb-pending-notice" id="kb-pending-notice">
+        Rules marked "pending" were suggested by the agent. Review and commit to make them permanent across future analyses.
+      </div>
+
+      <!-- Add rule form -->
+      <div class="kb-add-form" id="kb-add-form">
+        <div class="form-row">
+          <input class="form-input" id="form-id" placeholder="Rule ID  e.g. R-11" style="max-width:100px">
+          <select class="form-select" id="form-priority">
+            <option>CRITICAL</option>
+            <option>HIGH</option>
+            <option selected>MEDIUM</option>
+            <option>LOW</option>
+          </select>
+          <select class="form-select" id="form-type">
+            <option>VERTICAL_SEPARATION</option>
+            <option>MIN_CLEARANCE</option>
+            <option>ROUTING_PRIORITY</option>
+            <option>MATERIAL_SPEC</option>
+            <option>GENERAL</option>
+          </select>
+        </div>
+        <textarea class="form-input" id="form-desc" placeholder="Rule description — e.g. Fuel lines must route BELOW electrical cable trays at all times" rows="2" style="resize:none"></textarea>
+        <input class="form-input" id="form-source" placeholder="Source standard  e.g. SOLAS II-2, IEC 60079, Plant Std ENG-004">
+        <div class="form-actions">
+          <button class="btn-cancel" onclick="App.closeAddRuleForm()">Cancel</button>
+          <button class="btn-save"   onclick="App.saveRule()">Save rule</button>
+        </div>
+      </div>
+
+      <div class="kb-list" id="kb-list">
+        <div style="text-align:center;padding:28px;color:#334155;font-size:12px">
+          No rules yet. Upload a file to auto-import project rules, or add manually.
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════
+       EXPORT PAGE
+  ════════════════════════════════════════════ -->
+  <div class="page" id="page-export">
+    <div class="export-body">
+
+      <div class="export-list">
+
+        <div class="export-row">
+          <div class="export-icon" style="background:#1e3a52">📄</div>
+          <div class="export-info">
+            <div class="export-name">Scene JSON</div>
+            <div class="export-apps">3D Viewer · Re-import · CADMATIC pipeline</div>
+          </div>
+          <button class="btn-download" id="x-json" onclick="App.doExport('json')" disabled>↓ .json</button>
+        </div>
+
+        <div class="export-row">
+          <div class="export-icon" style="background:#1a3020">📐</div>
+          <div class="export-info">
+            <div class="export-name">AutoCAD DXF</div>
+            <div class="export-apps">AutoCAD · BricsCAD · LibreCAD · ZWCAD · SketchUp</div>
+          </div>
+          <button class="btn-download" id="x-dxf" onclick="App.doExport('dxf')" disabled>↓ .dxf</button>
+        </div>
+
+        <div class="export-row">
+          <div class="export-icon" style="background:#2d1a4a">🧩</div>
+          <div class="export-info">
+            <div class="export-name">IFC / BIM</div>
+            <div class="export-apps">Autodesk Revit · Navisworks · CADMATIC · Tekla · ArchiCAD</div>
+          </div>
+          <button class="btn-download" id="x-ifc" onclick="App.doExport('ifc')" disabled>↓ .ifc</button>
+        </div>
+
+        <div class="export-row">
+          <div class="export-icon" style="background:#1a2a10">📊</div>
+          <div class="export-info">
+            <div class="export-name">Issue Report CSV</div>
+            <div class="export-apps">Excel · Google Sheets · Jira import · QA tracking</div>
+          </div>
+          <button class="btn-download" id="x-csv" onclick="App.doExport('csv')" disabled>↓ .csv</button>
+        </div>
+
+        <div class="export-row">
+          <div class="export-icon" style="background:#2a1a10">📝</div>
+          <div class="export-info">
+            <div class="export-name">Engineering Report (TXT)</div>
+            <div class="export-apps">Email · PDF print · Drawing revision package · CADMATIC notes</div>
+          </div>
+          <button class="btn-download" id="x-txt" onclick="App.doExport('txt')" disabled>↓ .txt</button>
+        </div>
+
+        <div class="export-row">
+          <div class="export-icon" style="background:#1a2a3a">🔧</div>
+          <div class="export-info">
+            <div class="export-name">Knowledge Base JSON</div>
+            <div class="export-apps">Portable — reuse committed rules across projects and teams</div>
+          </div>
+          <button class="btn-download" onclick="App.doExport('kb')">↓ kb.json</button>
+        </div>
+
+      </div>
+
+      <div class="export-note" id="export-note">
+        Upload and analyze a file first to unlock corrected model downloads.
+        The Knowledge Base export is always available.
+      </div>
+
+    </div>
+  </div>
+
+</div><!-- /#app -->
+
+<!-- ── SCRIPTS — loaded in dependency order ── -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="js/clash.js"></script>
+<script src="js/api.js"></script>
+<script src="js/parser.js"></script>
+<script src="js/viewer3d.js"></script>
+<script src="js/export.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>
